@@ -1,0 +1,64 @@
+name: Full Stack Website CI/CD Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  backend_build_test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set Up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install Backend Dependencies
+        run: cd backend && npm install
+
+      - name: Run Backend Tests
+        run: cd backend && npm test
+
+  frontend_build_test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set Up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install Frontend Dependencies
+        run: cd frontend && npm install
+
+      - name: Build Frontend
+        run: cd frontend && npm run build
+
+      - name: Run Frontend Tests
+        run: cd frontend && npm test
+
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy Backend
+        run: |
+          # Add your backend deployment steps here
+          # Example: Use a deployment tool like Heroku, AWS, etc.
+          # Example: If using Heroku, you might do something like:
+          # heroku login -i
+          # heroku git:remote -a your-heroku-app
+          # git push heroku main
+
+      - name: Deploy Frontend
+        run: |
+          # Add your frontend deployment steps here
+          # Example: If using a hosting provider, you might use FTP, SFTP, or a deployment tool
